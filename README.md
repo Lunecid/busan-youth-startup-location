@@ -189,6 +189,7 @@ streamlit run app_final.py
 - 저장소에 든 통합 테이블(`통합_행정동_데이터_1st.csv`)과 캐시(`cache/*.parquet`)만으로 상위 5개 동과 행정동 상세 분석 화면이 동작한다.
 - 캐시는 pyarrow 21.0으로 저장돼 있다. 설치된 pyarrow가 캐시를 읽지 못하면 사이드바의 '캐시 생성/갱신' 버튼으로 통합 테이블에서 다시 만든다.
 - 지도에는 행정동 경계 GeoJSON이 필요한데, 저장소에서 뺐다(3. 데이터 참고). 경위도(WGS84) 좌표이고 각 feature의 `properties.ADM_NM`에 행정동 이름(예: `초량2동`)이 든 부산 행정동 경계 파일을 직접 준비해 사이드바의 'GeoJSON 경로'(기본값 `busan_205.geojson`)에 지정한다. 없으면 지도 자리에 안내 문구만 나온다.
+- 이전 버전 스크립트(`app_admin_dong_v*.py`, `app_busan_dong_dash*.py`, `test_*.py`)도 같은 경계 파일을 기본 경로로 읽으므로, 파일이 없으면 실행되지 않는다.
 
 <details>
 <summary><b>참고문헌</b></summary>
