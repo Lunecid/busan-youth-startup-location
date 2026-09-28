@@ -149,6 +149,8 @@ flowchart LR
 |---|---|
 | [`docs/report.pdf`](docs/report.pdf) | 1학기 연구 보고서 (11쪽). 표지는 개인정보가 있어 제외했다. |
 | [`figures/`](figures/) | 군집 분석 그림 |
+| [`src/`](src/) | 전처리·시각화 노트북, 행정동 통합 테이블, 군집 결과(`gdf_result.gpkg`) |
+| [`src/dashboard/`](src/dashboard/) | Streamlit 입지 대시보드. `src/dashboard`에서 `streamlit run app_final.py` |
 
 <details>
 <summary><b>참고문헌</b></summary>
