@@ -7,3 +7,13 @@ __pycache__/
 .Python
 .venv/
 venv/
+
+# Data whose redistribution terms are unconfirmed (see README, section 3)
+src/data/restaurant_counts/
+src/data/processed/대형마트수/
+src/data/processed/행정동별_음식점수.csv
+src/data/extra/
+src/부산_음식업종_행정동별_통합.csv
+src/preprocessed_busan_data_visualization.csv
+src/gdf_result.gpkg
+src/dashboard/*.geojson

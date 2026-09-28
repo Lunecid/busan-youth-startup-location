@@ -48,9 +48,24 @@
 |---|---|
 | 생활인구 | 행정동별 성별·시간대별·연령대별 생활인구 (월별 일평균) |
 | 소비매출 | 행정동별 성별·시간대별·업종(대분류)별·연령대별 소비매출 (월별 일평균) |
-| 음식점업 | 행정동별 음식점 수, 업종(한식·중식·일식·카페 등)별 통합 데이터 |
+| 음식점업 | 행정동별 음식점 수, 업종(한식·중식·일식·카페 등)별 통합 데이터 (저장소에 넣지 않음) |
 
-출처: [부산 Big-데이터웨이브](https://data.busan.go.kr/), [공공데이터포털](https://www.data.go.kr/). 저장소에는 행정동 단위로 집계된 표가 들어 있습니다. 생활인구·소비매출을 행정동 × 월로 피벗·병합한 통합 테이블(`src/dashboard/통합_행정동_데이터_1st.csv`), 행정동별 음식점 수(`src/data/restaurant_counts/`, `src/data/processed/`), 대형마트 수(`src/data/processed/대형마트수/`) 등입니다. 점포 단위 자료나 개인정보는 들어 있지 않습니다.
+출처: [부산 Big-데이터웨이브](https://data.busan.go.kr/), [공공데이터포털](https://www.data.go.kr/).
+
+**저장소에 든 표.** 부산시 공공데이터(생활인구·소비매출)로 만든 행정동 단위 가공 표만 넣었다. 점포 단위 자료나 개인정보는 들어 있지 않다.
+
+- `src/dashboard/통합_행정동_데이터_1st.csv`: 생활인구·소비매출을 행정동 × 월로 피벗·병합한 통합 테이블
+- `src/dashboard/cache/*.parquet`: 위 통합 테이블을 대시보드용 긴 형식(시간대·연령대·성별)으로 바꾼 캐시
+
+**저장소에서 뺀 자료.** 아래 파일은 출처의 재배포 조건을 확인하지 못해 저장소에서 뺐다.
+
+| 파일 | 내용 |
+|---|---|
+| `src/data/restaurant_counts/` (구·군별 16개), `src/부산_음식업종_행정동별_통합.csv`, `src/data/processed/행정동별_음식점수.csv` | 행정동별 음식점 수와 음식업종 통계 |
+| `src/data/processed/대형마트수/` | 행정동별 대형마트 수. 만든 노트북(`src/행정동별_대형마트수_전처리.ipynb`)은 남겼지만, 입력(대규모점포 등록현황 CSV, 행정동 경계 GeoJSON)은 저장소에 없다. |
+| `src/dashboard/busan_205.geojson` | 대시보드 지도용 부산 행정동 경계 205개 (SGIS 형식: `ADM_CD`, `ADM_NM`) |
+| `src/preprocessed_busan_data_visualization.csv`, `src/gdf_result.gpkg` | 시각화 노트북의 입력 표. 위 음식점 수 열이 들어 있고, gpkg에는 행정동 경계도 들어 있다. |
+| `src/data/extra/dataset_24_average.csv` | 행정동별 평균 표. 어떻게 만들었는지 저장소에 기록이 없다. |
 
 **파생변수**
 
@@ -160,8 +175,20 @@ flowchart LR
 |---|---|
 | [`docs/report.pdf`](docs/report.pdf) | 1학기 연구 보고서 (11쪽). 표지는 개인정보가 있어 제외했다. |
 | [`figures/`](figures/) | 군집 분석 그림 |
-| [`src/`](src/) | 전처리·시각화 노트북과 행정동 단위 표. 시각화 노트북 `datorylab_visualization.ipynb`는 팀 작업이다. 매출 예측(XGBoost·LightGBM)과 Potential Gap 코드는 들어 있지 않다. `preprocessed_busan_data_visualization.csv`의 군집 구성(108·10·10·77개 동)은 9의 BUSAN DATA WEEK 분석과 같다. `gdf_result.gpkg`의 군집 값은 0·1 두 가지뿐인 중간 결과로, 5-1의 4유형이 아니다. |
-| [`src/dashboard/`](src/dashboard/) | 연·월을 고르면 행정동별 생활인구·소비 지표의 상위 5개 동, 지도, 동별 시간대·연령대·성별·월별 추이를 보여 주는 Streamlit 대시보드(`app_*.py`, 팀 작업). `src/dashboard`에서 `streamlit run app_final.py` |
+| [`src/`](src/) | 전처리·시각화 노트북. 매출 예측(XGBoost·LightGBM)과 Potential Gap 코드는 들어 있지 않다. 시각화 노트북 `datorylab_visualization.ipynb`는 팀 작업이고, 입력 표(`preprocessed_busan_data_visualization.csv`, `gdf_result.gpkg`)를 뺐기 때문에 이 저장소만으로는 실행되지 않는다(3. 데이터 참고). 그 입력 표의 군집 구성(108·10·10·77개 동)은 9의 BUSAN DATA WEEK 분석과 같고, `gdf_result.gpkg`의 군집 값은 0·1 두 가지뿐인 중간 결과로 5-1의 4유형이 아니다. |
+| [`src/dashboard/`](src/dashboard/) | 연·월을 고르면 행정동별 생활인구·소비 지표의 상위 5개 동, 지도, 동별 시간대·연령대·성별·월별 추이를 보여 주는 Streamlit 대시보드(`app_*.py`, 팀 작업). 실행 방법은 아래. |
+
+**대시보드 실행**
+
+```bash
+cd src/dashboard
+pip install -r requirements.txt
+streamlit run app_final.py
+```
+
+- 저장소에 든 통합 테이블(`통합_행정동_데이터_1st.csv`)과 캐시(`cache/*.parquet`)만으로 상위 5개 동과 행정동 상세 분석 화면이 동작한다.
+- 캐시는 pyarrow 21.0으로 저장돼 있다. 설치된 pyarrow가 캐시를 읽지 못하면 사이드바의 '캐시 생성/갱신' 버튼으로 통합 테이블에서 다시 만든다.
+- 지도에는 행정동 경계 GeoJSON이 필요한데, 저장소에서 뺐다(3. 데이터 참고). 경위도(WGS84) 좌표이고 각 feature의 `properties.ADM_NM`에 행정동 이름(예: `초량2동`)이 든 부산 행정동 경계 파일을 직접 준비해 사이드바의 'GeoJSON 경로'(기본값 `busan_205.geojson`)에 지정한다. 없으면 지도 자리에 안내 문구만 나온다.
 
 <details>
 <summary><b>참고문헌</b></summary>
