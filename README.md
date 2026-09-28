@@ -21,7 +21,7 @@
 
 </div>
 
-> **English summary** — Only 15.9% of Korean founders under 30 survive five years, and restaurants (22.8% five-year survival) are where young founders cluster. In this DatoryLab project (Pusan National University Graduate School of Data Science), requested by the City of Busan, a four-person team covered all ~200 administrative districts (*dong*) of Busan: it combined floating-population, card-spending and restaurant data, engineered market features (competition intensity, floating-to-resident ratio, youth/middle-aged share, time-of-day population), **segmented commercial districts with K-Means (K = 4)**, and **predicted monthly restaurant sales with LightGBM (R² = 0.897 with a log target)**. The gap between predicted and actual sales ("Potential Gap") highlights districts whose conditions promise more than they currently earn. The team turned the results into cluster-specific start-up support proposals. **My part was the data exploration and data engineering;** the derived features, clustering, sales-prediction models, Streamlit dashboard and report were the team's work.
+> **English summary** — Only 15.9% of Korean founders under 30 survive five years, and restaurants (22.8% five-year survival) are where young founders cluster. In this DatoryLab project (Pusan National University Graduate School of Data Science), requested by the City of Busan, a four-person team covered all ~200 administrative districts (*dong*) of Busan: it combined floating-population, card-spending and restaurant data, engineered market features (competition intensity, floating-to-resident ratio, youth/middle-aged share, time-of-day population), **segmented commercial districts with K-Means (K = 4)**, and **predicted monthly restaurant sales with LightGBM (R² = 0.897 with a log target)**. The gap between predicted and actual sales ("Potential Gap") highlights districts whose conditions promise more than they currently earn. The team turned the results into cluster-specific start-up support proposals. **My part was the data exploration and data engineering;** the derived features, clustering, sales-prediction models, the Streamlit dashboard code (`src/dashboard/app_*.py`), the visualization notebook (`src/datorylab_visualization.ipynb`) and the report were team work.
 
 ---
 
@@ -148,7 +148,7 @@ flowchart LR
 - **데이터 탐색**: 생활인구·소비매출·음식점 데이터를 탐색했다.
 - **데이터 엔지니어링**: 분석에 쓸 데이터를 준비하는 데이터 엔지니어링을 맡았다.
 
-파생변수 설계, 군집 분석과 매출 예측 모델링, Streamlit 대시보드와 보고서는 팀의 작업이다.
+파생변수 설계, 군집 분석과 매출 예측 모델링, Streamlit 대시보드 코드(`src/dashboard/app_*.py`), 시각화 노트북(`src/datorylab_visualization.ipynb`), 보고서는 팀 작업이다.
 
 ## 9. 후속: BUSAN DATA WEEK 2025 출품
 
@@ -160,8 +160,8 @@ flowchart LR
 |---|---|
 | [`docs/report.pdf`](docs/report.pdf) | 1학기 연구 보고서 (11쪽). 표지는 개인정보가 있어 제외했다. |
 | [`figures/`](figures/) | 군집 분석 그림 |
-| [`src/`](src/) | 전처리·시각화 노트북과 행정동 단위 표. 매출 예측(XGBoost·LightGBM)과 Potential Gap 코드는 들어 있지 않다. `preprocessed_busan_data_visualization.csv`의 군집 구성(108·10·10·77개 동)은 9의 BUSAN DATA WEEK 분석과 같다. `gdf_result.gpkg`의 군집 값은 0·1 두 가지뿐인 중간 결과로, 5-1의 4유형이 아니다. |
-| [`src/dashboard/`](src/dashboard/) | 연·월을 고르면 행정동별 생활인구·소비 지표의 상위 5개 동, 지도, 동별 시간대·연령대·성별·월별 추이를 보여 주는 Streamlit 대시보드. `src/dashboard`에서 `streamlit run app_final.py` |
+| [`src/`](src/) | 전처리·시각화 노트북과 행정동 단위 표. 시각화 노트북 `datorylab_visualization.ipynb`는 팀 작업이다. 매출 예측(XGBoost·LightGBM)과 Potential Gap 코드는 들어 있지 않다. `preprocessed_busan_data_visualization.csv`의 군집 구성(108·10·10·77개 동)은 9의 BUSAN DATA WEEK 분석과 같다. `gdf_result.gpkg`의 군집 값은 0·1 두 가지뿐인 중간 결과로, 5-1의 4유형이 아니다. |
+| [`src/dashboard/`](src/dashboard/) | 연·월을 고르면 행정동별 생활인구·소비 지표의 상위 5개 동, 지도, 동별 시간대·연령대·성별·월별 추이를 보여 주는 Streamlit 대시보드(`app_*.py`, 팀 작업). `src/dashboard`에서 `streamlit run app_final.py` |
 
 <details>
 <summary><b>참고문헌</b></summary>
