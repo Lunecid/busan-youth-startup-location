@@ -1,15 +1,18 @@
 <div align="center">
 
-# 청년 창업가를 위한 부산 상권 최적 입지 제안
+# 청년 창업가를 위한 부산 상권 입지 제안
 ### 행정동 상권 유형화(K-Means)와 매출 예측(LightGBM)으로 찾은 "잠재력이 남은 동네"
 
-**부산대학교 데이터사이언스대학원 × 부산광역시 DatoryLab 프로젝트**
+**DatoryLab (부산대학교 데이터사이언스전문대학원) · 부산시 요청 과제**
 
-![Program](https://img.shields.io/badge/DatoryLab-부산광역시_협력_과제-0b5cad?style=flat-square)
-![Period](https://img.shields.io/badge/기간-2025.03–2025.11-555?style=flat-square)
-![Poster](https://img.shields.io/badge/BUSAN_DATA_WEEK-포스터_발표-555?style=flat-square)
+![Program](https://img.shields.io/badge/DatoryLab-부산시_요청_과제-0b5cad?style=flat-square)
+![Team](https://img.shields.io/badge/팀-4인-555?style=flat-square)
+![Period](https://img.shields.io/badge/기간-2025.05–2025.11-555?style=flat-square)
 <br>
+<sub>내 도구</sub>
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+<br>
+<sub>팀 도구</sub>
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-02569B?style=flat-square)
 ![XGBoost](https://img.shields.io/badge/XGBoost-EB6E1F?style=flat-square)
@@ -18,7 +21,7 @@
 
 </div>
 
-> **English summary** — Only 15.9% of Korean founders under 30 survive five years, and restaurants (22.8% five-year survival) are where young founders cluster. For all ~200 administrative districts (*dong*) of Busan, we combined floating-population, card-spending and restaurant data, engineered market features (competition intensity, floating-to-resident ratio, youth/middle-aged share, time-of-day population), **segmented commercial districts with K-Means (K = 4)**, and **predicted monthly restaurant sales with LightGBM (R² = 0.897 with a log target)**. The gap between predicted and actual sales ("Potential Gap") highlights districts whose conditions promise more than they currently earn. We turned the results into cluster-specific start-up support proposals.
+> **English summary** — Only 15.9% of Korean founders under 30 survive five years, and restaurants (22.8% five-year survival) are where young founders cluster. In this DatoryLab project (Pusan National University Graduate School of Data Science), requested by the City of Busan, a four-person team covered all ~200 administrative districts (*dong*) of Busan: it combined floating-population, card-spending and restaurant data, engineered market features (competition intensity, floating-to-resident ratio, youth/middle-aged share, time-of-day population), **segmented commercial districts with K-Means (K = 4)**, and **predicted monthly restaurant sales with LightGBM (R² = 0.897 with a log target)**. The gap between predicted and actual sales ("Potential Gap") highlights districts whose conditions promise more than they currently earn. The team turned the results into cluster-specific start-up support proposals. **My part was the data exploration and data engineering;** the derived features, clustering, sales-prediction models, Streamlit dashboard and report were the team's work.
 
 ---
 
@@ -47,7 +50,7 @@
 | 소비매출 | 행정동별 성별·시간대별·업종(대분류)별·연령대별 소비매출 (월별 일평균) |
 | 음식점업 | 행정동별 음식점 수, 업종(한식·중식·일식·카페 등)별 통합 데이터 |
 
-출처: [부산 Big-데이터웨이브](https://data.busan.go.kr/), [공공데이터포털](https://www.data.go.kr/). 원본 데이터는 이용 조건에 따라 저장소에 포함하지 않았습니다.
+출처: [부산 Big-데이터웨이브](https://data.busan.go.kr/), [공공데이터포털](https://www.data.go.kr/). 저장소에는 행정동 단위로 집계된 표가 들어 있습니다. 생활인구·소비매출을 행정동 × 월로 피벗·병합한 통합 테이블(`src/dashboard/통합_행정동_데이터_1st.csv`), 행정동별 음식점 수(`src/data/restaurant_counts/`, `src/data/processed/`), 대형마트 수(`src/data/processed/대형마트수/`) 등입니다. 점포 단위 자료나 개인정보는 들어 있지 않습니다.
 
 **파생변수**
 
@@ -59,6 +62,8 @@
 | 시간대별 유동인구 | 11–14시(점심), 17–20시(저녁), 22–01시(야간) |
 
 ## 4. 분석 방법
+
+아래 분석(파생변수, 군집 분석, 매출 예측, Potential Gap)은 팀이 진행했다. 내가 맡은 부분은 [8. 나의 역할](#8-나의-역할)에 적었다.
 
 ```mermaid
 flowchart LR
@@ -127,7 +132,7 @@ flowchart LR
 1. **군집별 맞춤형 창업 지원**: 대학가 상권엔 저가형 분식·카페, 오피스 상권엔 점심 특화 메뉴 컨설팅, 주거 상권엔 배달 전문점을 지원하는 식으로 군집 특성에 맞춘 차등 지원.
 2. **데이터 기반 입지 컨설팅**: 창업 지원 기관(부산창조경제혁신센터 등)에서 이 모델로 예비 창업자에게 입지와 메뉴를 과학적으로 추천.
 3. **저성과 군집 활성화**: 구조적으로 불리한 군집에는 임대료 지원, 공동 주방 설비, 지역 특산물 식당 유치 인센티브를 선제적으로 제공.
-4. **대시보드**: 희망 업종과 자본금을 넣으면 동별 예상 매출과 추천 입지를 지도로 보여주는 웹 대시보드 프로토타입(Streamlit)을 만들었다.
+4. **대시보드**: 희망 업종과 자본금을 넣으면 동별 예상 매출과 추천 입지를 지도로 보여주는 웹 대시보드 프로토타입(Streamlit)을 팀이 만들었다. 이 저장소의 `src/dashboard/app_final.py`에는 업종·자본금 입력과 매출 예측이 없다(10. 산출물 참고).
 
 ## 7. 한계와 다음 단계
 
@@ -138,19 +143,25 @@ flowchart LR
 
 ## 8. 나의 역할
 
-- 데이터 수집·전처리와 행정동 단위 통합
-- 파생변수 설계, 군집 분석과 매출 예측 모델링
-- Streamlit 웹 대시보드 개발
-- 보고서 작성, BUSAN DATA WEEK 포스터 제작
+4인 팀에서 다음을 맡았다.
 
-## 9. 산출물
+- **데이터 탐색**: 생활인구·소비매출·음식점 데이터를 탐색했다.
+- **데이터 엔지니어링**: 분석에 쓸 데이터를 준비하는 데이터 엔지니어링을 맡았다.
+
+파생변수 설계, 군집 분석과 매출 예측 모델링, Streamlit 대시보드와 보고서는 팀의 작업이다.
+
+## 9. 후속: BUSAN DATA WEEK 2025 출품
+
+같은 주제로 팀 '부산한 부산'에 참여해 BUSAN DATA WEEK 2025 데이터 활용 우수사례 공모전에 「클러스터링 기반 부산시 창업 최적지 추천 시스템」을 출품했다. DatoryLab 과제와는 별개의 분석으로, 공공데이터 13종에서 만든 6개 변수(유동·주거 인구 비율, 청년 유동인구 비율, 17–20시 유동인구, 네이버 데이터랩 지역 검색 관심도, 가장 가까운 지하철역까지의 거리, 점포 밀도)로 부산 205개 행정동을 K-평균 군집분석으로 4개 상권 유형(108·10·10·77개 동)으로 나눴다. 군집 수는 엘보 방법과 실루엣 점수로 정했다.
+
+## 10. 산출물
 
 | 파일 | 설명 |
 |---|---|
 | [`docs/report.pdf`](docs/report.pdf) | 1학기 연구 보고서 (11쪽). 표지는 개인정보가 있어 제외했다. |
 | [`figures/`](figures/) | 군집 분석 그림 |
-| [`src/`](src/) | 전처리·시각화 노트북, 행정동 통합 테이블, 군집 결과(`gdf_result.gpkg`) |
-| [`src/dashboard/`](src/dashboard/) | Streamlit 입지 대시보드. `src/dashboard`에서 `streamlit run app_final.py` |
+| [`src/`](src/) | 전처리·시각화 노트북과 행정동 단위 표. 매출 예측(XGBoost·LightGBM)과 Potential Gap 코드는 들어 있지 않다. `preprocessed_busan_data_visualization.csv`의 군집 구성(108·10·10·77개 동)은 9의 BUSAN DATA WEEK 분석과 같다. `gdf_result.gpkg`의 군집 값은 0·1 두 가지뿐인 중간 결과로, 5-1의 4유형이 아니다. |
+| [`src/dashboard/`](src/dashboard/) | 연·월을 고르면 행정동별 생활인구·소비 지표의 상위 5개 동, 지도, 동별 시간대·연령대·성별·월별 추이를 보여 주는 Streamlit 대시보드. `src/dashboard`에서 `streamlit run app_final.py` |
 
 <details>
 <summary><b>참고문헌</b></summary>
